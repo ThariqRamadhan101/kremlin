@@ -1,0 +1,50 @@
+{
+  "pejabat_penandatangan_data": [
+    {
+      "jabatan": "Direktur Jenderal Prasarana Strategis",
+      "nama": "Bisma Staniarto",
+      "nip": "196803191996031001",
+      "special_case": true,
+      "golongan_pns": [],
+      "golongan_pppk": [],
+      "nomor_surat_pns": "KP0605/B/Ds/2026/",
+      "nomor_surat_pppk": ""
+    },
+    {
+      "golongan_pns": ["III", "IV", ""],
+      "golongan_pppk": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII",
+        "XIII",
+        "XIV",
+        "XV",
+        "XVI",
+        "XVII"
+      ],
+      "jabatan": "Sekretaris Direktorat Jenderal Prasarana Strategis",
+      "nama": "Essy Asiah",
+      "nip": "196605181993032002",
+      "nomor_surat_pns": "KP0605/B/Gs/2026/",
+      "nomor_surat_pppk": "/KPTS/Gs/2026"
+    },
+    {
+      "golongan_pns": ["I", "II"],
+      "golongan_pppk": [],
+      "jabatan": "Kepala Bagian Kepegawaian dan Umum",
+      "nama": "Agus Dwi Praptana",
+      "nip": "198508212009121001",
+      "nomor_surat_pns": "KP0605/B/Gs/3/2026/",
+      "nomor_surat_pppk": ""
+    }
+  ]
+}

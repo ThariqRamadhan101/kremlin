@@ -1,0 +1,36 @@
+{
+  "pejabat_data": [
+    {
+      "nip": "196803191996031001",
+      "nama": "Bisma Staniarto, S.T., M.Sc.",
+      "jabatan": "Direktur Jenderal Prasarana Strategis"
+    },
+    {
+      "nip": "196605181993032002",
+      "nama": "Ir. Essy Asiah, M.T.",
+      "jabatan": "Sekretaris Direktorat Jenderal Prasarana Strategis"
+    },
+    {
+      "nip": "197803112005021002",
+      "nama": "Usman Hermanto, S.T., M.Eng.",
+      "jabatan": "Direktur Sistem dan Strategi Penyelenggaraan Prasarana Strategis"
+    },
+    {
+      "nip": "197106301999031004",
+      "nama": "Jonny Zainuri Echsan, S.T., MCM",
+      "jabatan": "Direktur Infrastruktur Dukungan Pendidikan"
+    },
+    {
+      "nip": "196812091995031001",
+      "nama": "Ir. Tanozisochi Lase, M.Sc.",
+      "jabatan": "Direktur Infrastruktur Dukungan Perekonomian, Peribadatan, Kesehatan, Olahraga dan Sosial Budaya"
+    },
+    {
+      "nip": "196910301998031005",
+      "nama": "Ir. Agung Hari Prabowo, M.T.",
+      "jabatan": "Direktur Kepatuhan Intern"
+    }
+  ]
+}
+
+

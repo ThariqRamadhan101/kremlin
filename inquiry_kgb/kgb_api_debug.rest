@@ -1,0 +1,59 @@
+### KGB API Debugging
+
+# Gaji Pokok Detail API
+GET https://ehrm.pu.go.id/api/gaji-pokok/getdetail/409125
+Authorization: eyJhbGciOiJSUzI1NiIsImtpZCI6IjVENjc2RTFEODlBRUZBQzJBOTQxRTk4NzM3Njg0QUE5MEJCN0NFRkEiLCJ4NXQiOiJYV2R1SFltdS1zS3BRZW1ITjJoS3FRdTN6dm8iLCJ0eXAiOiJhdCtqd3QifQ.eyJpc3MiOiJodHRwczovL3Nzby5wdS5nby5pZC8iLCJleHAiOjE3Njc4NTQ0MzEsImlhdCI6MTc2Nzg1MDgzMSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIHJvbGVzIG9mZmxpbmVfYWNjZXNzIiwianRpIjoiODg4MGZiNjItZjQ5Zi00N2RhLWFiZDAtYjA5YmFjNmNhZjY0Iiwib2lfcHJzdCI6IkVocm0iLCJvaV9hdV9pZCI6IjIwYWQ1YzdlLWY3Y2MtNDYwZS05NzdiLTNkNzZhMzMwMjZmOSIsInN1YiI6IjE5NDI2OSIsImVtYWlsIjoicmFtYWRoYW4uYWxjaGFuZHJhLnlhc3JpYWxAcHUuZ28uaWQiLCJuYW1lIjoidGhhcmlxX3JhbWFkaGFuIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidGhhcmlxX3JhbWFkaGFuIiwibmlwIjoiMTk5OTAxMDYyMDI1MDYxMDExIiwiY2xpZW50X2lkIjoiRWhybSIsIm9pX3Rrbl9pZCI6IjRmYzMxZGRiLWZmNjgtNGEyYy1hNzY1LTI0NzIzYzVlNDgyYyJ9.cspfbS-zuKMDhLW40rLEASLeFk8-hofmj24iIqmov6aoZiw6-x5ACeqAxZLmoX08hf_MkoPdFs3X8RMhzwojgR-5Lf9u7Mzy_1OVNTeatGyLxzPnew6LW2AGrnLwxKzPMd-eq-B5PI3sA_RVeTDl_JTlRpWP3T7I_PsgWL9bGaYYU9jXPtwYD1XHupuEoWWNcHoVjOM_D--ntyq0ti0H06az5glZ_3ppdWqZmZ2BHsY9NlCtB80PMelBEWVFeaeeLE_kk8ArcfbRz0gqh4x45eTyjQ_E0Igd4EfNCrJqFlznV1jWtlMWs5xPTEZzj48kZp6q2CFDI7knDaA7mNnYFQ
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+
+###
+
+# Pangkat Detail API  
+GET https://ehrm.pu.go.id/api/pangkat/getdetail/244951
+Authorization: Bearer YOUR_TOKEN_HERE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+
+###
+
+# Gaji Pokok List API
+POST https://ehrm.pu.go.id/api/gaji-pokok/get
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+
+{
+  "on_page": 1,
+  "page_size": 25,
+  "id_pegawai": "59195"
+}
+
+###
+
+# Pangkat List API
+POST https://ehrm.pu.go.id/api/pangkat/get
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+
+{
+  "on_page": 1,
+  "page_size": 25,
+  "id_pegawai": "59195"
+}
+
+###
+
+# Employee Search API
+POST https://ehrm.pu.go.id/api/pegawai/search
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+
+{
+  "nip": "",
+  "nama": "",
+  "jabatan": "jenderal prasarana strategis",
+  "on_page": 1,
+  "page_size": 100000000000,
+  "status_asal": "1,5,6",
+  "status_akhir": "1"
+}
