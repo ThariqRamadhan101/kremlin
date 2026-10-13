@@ -1,0 +1,11 @@
+config.py
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.xlsx
+*.pdf
+documents/
+kgb_processed_data_*.xlsx
+Metadata\ KGB.xlsx
+kgb_api_debug.rest

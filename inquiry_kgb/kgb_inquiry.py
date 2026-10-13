@@ -18,6 +18,8 @@ import urllib.parse
 import argparse
 from dateutil.relativedelta import relativedelta
 
+import config
+
 
 class KGBInquiry:
     def __init__(
@@ -47,11 +49,11 @@ class KGBInquiry:
         self.nip = nip
         self.kgb_eligibility = kgb_eligibility
 
-        self.base_url = "https://ehrm.pu.go.id/api"
+        self.base_url = config.BASE_URL
         self.headers = {
             "Content-Type": "application/json",
             "Authorization": self.auth_token,
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+            "User-Agent": config.USER_AGENT,
         }
 
     def search_employees(self) -> Dict:
@@ -61,16 +63,16 @@ class KGBInquiry:
         Returns:
             Dict: API response containing employee data
         """
-        url = f"{self.base_url}/pegawai/search"
+        url = f"{self.base_url}{config.SEARCH_PEGAWAI_PATH}"
 
         payload = {
             "nip": f"{self.nip}" if self.nip else "",
             "nama": "",
-            "jabatan": "jenderal prasarana strategis",
-            "on_page": 1,
-            "page_size": 100000000000,
-            "status_asal": "1,5,6",
-            "status_akhir": "1",
+            "jabatan": config.SEARCH_JABATAN,
+            "on_page": config.SEARCH_ON_PAGE,
+            "page_size": config.SEARCH_PAGE_SIZE,
+            "status_asal": config.SEARCH_STATUS_ASAL,
+            "status_akhir": config.SEARCH_STATUS_AKHIR,
         }
 
         try:
@@ -283,7 +285,7 @@ class KGBInquiry:
         print(f"Applying KGB eligibility filter: {self.kgb_eligibility}")
         if self.kgb_eligibility:
             # Golongan yang eligible pada tahun GENAP (even years)
-            even_year_golongan = ["I/b", "I/c", "I/d", "II/b", "II/c", "II/d"]
+            even_year_golongan = config.EVEN_YEAR_GOLONGAN
 
             # Create eligibility mask
             eligible_mask = False
@@ -494,9 +496,9 @@ class KGBInquiry:
         try:
             # TO DO: Pisahkan antara PNS dan PPPK
             if status == "PNS":
-                df = pd.read_excel("Daftar Gaji PNS.xlsx")
+                df = pd.read_excel(config.FILE_DAFTAR_GAJI_PNS)
             elif status == "PPPK":
-                df = pd.read_excel("Daftar Gaji PPPK.xlsx")
+                df = pd.read_excel(config.FILE_DAFTAR_GAJI_PPPK)
             else:
                 return 0
             # Filter by golongan and masa kerja tahun
@@ -576,18 +578,19 @@ class KGBInquiry:
                 return error_msg
 
             # Create base documents folder
-            base_docs_folder = "documents"
+            base_docs_folder = config.DOCUMENTS_FOLDER
             os.makedirs(base_docs_folder, exist_ok=True)
 
             # Construct download URL
             encoded_path = urllib.parse.quote(arsip_path)
             download_url = (
-                f"https://ehrm.pu.go.id/api/cuti/get-arsip-cuti?arsip={encoded_path}"
+                f"{self.base_url}{config.GET_ARSIP_CUTI_PATH}?arsip={encoded_path}"
             )
 
             # Download file with detailed error handling
             response = requests.get(
-                download_url, headers=self.headers, timeout=30)
+                download_url, headers=self.headers, timeout=config.TIMEOUT_SECONDS
+            )
 
             if response.status_code != 200:
                 error_msg = f"HTTP {response.status_code}: {response.text[:200]}"
@@ -754,10 +757,10 @@ class KGBInquiry:
         golongan = golongan.split("/")[0]
         import json
 
-        with open("pejabat_penandatangan.json", "r", encoding="utf-8") as f:
+        with open(config.FILE_PEJABAT_PENANDATANGAN, "r", encoding="utf-8") as f:
             pejabat_penandatangan_list = json.load(f)
 
-        with open("pejabat.json", "r", encoding="utf-8") as f:
+        with open(config.FILE_PEJABAT, "r", encoding="utf-8") as f:
             pejabat_list = json.load(f)
 
         for pejabat in pejabat_list["pejabat_data"]:
@@ -818,11 +821,14 @@ class KGBInquiry:
             Dict: Latest gaji pokok data or empty dict
         """
         try:
-            payload = {"on_page": 1, "page_size": 25,
-                       "id_pegawai": employee_id}
+            payload = {
+                "on_page": 1,
+                "page_size": config.HISTORY_PAGE_SIZE,
+                "id_pegawai": employee_id,
+            }
 
             response = requests.post(
-                "https://ehrm.pu.go.id/api/gaji-pokok/get",
+                f"{self.base_url}{config.GAJI_POKOK_GET_PATH}",
                 json=payload,
                 headers=self.headers,
             )
@@ -851,11 +857,14 @@ class KGBInquiry:
             Dict: Latest pangkat data or empty dict
         """
         try:
-            payload = {"on_page": 1, "page_size": 25,
-                       "id_pegawai": employee_id}
+            payload = {
+                "on_page": 1,
+                "page_size": config.HISTORY_PAGE_SIZE,
+                "id_pegawai": employee_id,
+            }
 
             response = requests.post(
-                "https://ehrm.pu.go.id/api/pangkat/get",
+                f"{self.base_url}{config.PANGKAT_GET_PATH}",
                 json=payload,
                 headers=self.headers,
             )
@@ -884,7 +893,7 @@ class KGBInquiry:
             Dict: Detailed gaji pokok data or empty dict
         """
         try:
-            url = f"https://ehrm.pu.go.id/api/gaji-pokok/getdetail/{gaji_id}"
+            url = f"{self.base_url}{config.GAJI_POKOK_GETDETAIL_PATH}/{gaji_id}"
             response = requests.post(url, headers=self.headers)
 
             if response.status_code == 200:
@@ -911,7 +920,7 @@ class KGBInquiry:
             Dict: Detailed pangkat data or empty dict
         """
         try:
-            url = f"https://ehrm.pu.go.id/api/pangkat/getdetail/{pangkat_id}"
+            url = f"{self.base_url}{config.PANGKAT_GETDETAIL_PATH}/{pangkat_id}"
 
             response = requests.post(url, headers=self.headers)
 
@@ -1291,14 +1300,14 @@ class KGBInquiry:
         # Save to Excel with KGB-specific format
         print("\nStep 3: Saving Excel files...")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"kgb_processed_data_{timestamp}.xlsx"
+        filename = f"{config.OUTPUT_FILE_PREFIX}{timestamp}.xlsx"
         output_file = self.save_kgb_excel(kgb_df, filename)
 
         print("\n" + "=" * 60)
         print("PHASE 3 COMPLETED")
         print("=" * 60)
         print(f"Output file: {output_file}")
-        print(f"Documents folder: documents/")
+        print(f"Documents folder: {config.DOCUMENTS_FOLDER}/")
 
         return output_file
 
@@ -1310,7 +1319,7 @@ class KGBInquiry:
             List[str]: Ordered list of unit kerja names
         """
         try:
-            with open("urutan_unit_kerja.json", "r", encoding="utf-8") as f:
+            with open(config.FILE_URUTAN_UNIT_KERJA, "r", encoding="utf-8") as f:
                 unit_kerja_config = json.load(f)
                 return unit_kerja_config.get("unit_kerja_order", [])
         except FileNotFoundError:
@@ -1332,7 +1341,7 @@ class KGBInquiry:
             str: Tembusan name or empty string if not found
         """
         try:
-            with open("tembusan_mapping.json", "r", encoding="utf-8") as f:
+            with open(config.FILE_TEMBUSAN_MAPPING, "r", encoding="utf-8") as f:
                 tembusan_config = json.load(f)
                 tembusan_mapping = tembusan_config.get("tembusan_mapping", {})
                 return tembusan_mapping.get(unit_kerja, "")
@@ -1644,8 +1653,8 @@ def main():
     )
     args = parser.parse_args()
 
-    # Get token from command line argument or environment variable
-    token = args.token or os.getenv("KGB_AUTH_TOKEN")
+    # Get token from command line argument or config (env var with constant fallback)
+    token = args.token or config.AUTH_TOKEN
 
     if not token:
         print(" Error: No authentication token provided!")

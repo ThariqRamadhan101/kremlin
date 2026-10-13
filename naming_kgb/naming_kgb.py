@@ -8,6 +8,9 @@ from datetime import datetime
 # Setup paths - use current directory
 base_path = Path.cwd()
 output_base = base_path / 'kgb'
+sheet_name = 'PNS'
+# Set pages per person
+PAGES_PER_PERSON = 1
 
 # Find Excel and PDF files automatically
 excel_files = list(base_path.glob('*.xlsx'))
@@ -26,8 +29,7 @@ pdf_file = pdf_files[0]
 print(f"Menggunakan file Excel: {excel_file.name}")
 print(f"Menggunakan file PDF: {pdf_file.name}")
 
-# Set pages per person
-PAGES_PER_PERSON = 2
+
 
 # Baca Excel
 print("=" * 100)
@@ -35,7 +37,7 @@ print("STEP 1: Membaca file Excel")
 print("=" * 100)
 
 try:
-    df = pd.read_excel(excel_file, sheet_name='PPPK DONE')
+    df = pd.read_excel(excel_file, sheet_name=sheet_name)
 except Exception as e:
     print(f"ERROR: Gagal membaca file Excel: {e}")
     exit(1)
